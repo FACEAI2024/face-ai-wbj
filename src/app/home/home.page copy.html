@@ -1,0 +1,173 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-xl="1" size-xs="2"><img src="/assets/icon/logo.png" alt="IHPC A*STAR" height="40"></ion-col>
+          <ion-col size-xl="10" size-xs="10">Contactless Vital Sign Measurement</ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- <img src="/assets/icon/logo.png" alt="IHPC A*STAR"  height="40" style="margin: 0px;">
+      <span style="margin-left: 5%;">Contactless Vital Sign Measurement</span> -->
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div style="text-align: center;">
+      <video class="video" #video autoplay playsinline muted></video>
+      <div class="circle-box" id="circle-box"></div>
+    </div>
+
+    <div style="text-align: center;">
+      <!-- <ion-button shape="round" (click)="isRecording ? stopRecord() : recordVideo()">
+        <ion-icon [name]="isRecording ? 'stop' : 'videocam'"></ion-icon>
+      </ion-button> -->
+      <ion-button shape="round" (click)="recordVideo()" [disabled]="isRecording">
+        <ion-icon [name]="isRecording ? 'stop' : 'videocam'"></ion-icon>
+      </ion-button>
+      <p><ion-spinner name="lines-sharp-small" *ngIf="spinner_show"></ion-spinner> {{status_message}}</p>
+    </div>
+    <div style="position: relative;">
+      <!-- <ion-card no-padding>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-align-items-start">
+              <ion-col size-xl="3" size-xs="4">
+                <img src="/assets/icon/heart_beat.png" class="result-icon"><br />
+                <p><b>Heart Rate</b></p>
+              </ion-col>
+              <ion-col size-xl="5" size-xs="8">
+                <div echarts class="demo-chart" [options]="chartOption_HR" [merge]="new_chartOption_HR"></div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card no-padding>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-align-items-start">
+              <ion-col size-xl="3" size-xs="4">
+                <img src="/assets/icon/breathing_rate.png" class="result-icon"><br />
+                <p><b>Breathing Rate</b></p>
+              </ion-col>
+              <ion-col size-xl="5" size-xs="8">
+                <div echarts class="demo-chart" [options]="chartOption_BR" [merge]="new_chartOption_BR"></div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-card no-padding>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-align-items-start">
+              <ion-col size-xl="3" size-xs="4">
+                <img src="/assets/icon/blood_pressure1.png" class="result-icon"><br />
+                <p><b>Blood Pressure</b></p>
+              </ion-col>
+              <ion-col size-xl="5" size-xs="4">
+                <div echarts class="demo-chart" [options]="chartOption_SBP" [merge]="new_chartOption_SBP"></div>
+              </ion-col>
+              <ion-col size-xl="3" size-xs="4">
+                <div echarts class="demo-chart" [options]="chartOption_DBP" [merge]="new_chartOption_DBP"></div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card> -->
+
+      <!-- <ion-card>
+        <ion-card-content>
+          <img src="/assets/icon/oxygen.png" class="result-icon">
+          <div [options]="options" class="demo-chart" echarts></div>
+        </ion-card-content>
+      </ion-card> -->
+
+      <ion-grid>
+        <ion-row class="ion-align-items-start">
+          <ion-col size-xl="3" size-xs="12">
+            <ion-card no-padding>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row class="ion-align-items-start">
+                    <ion-col size-xl="5" size-xs="5">
+                      <img src="/assets/icon/heart_beat.png" class="result-icon"><br />
+                      <p><b>Heart Rate</b></p>
+                    </ion-col>
+                    <ion-col size-xl="7" size-xs="7">
+                      <div echarts class="demo-chart" [options]="chartOption_HR" [merge]="new_chartOption_HR"></div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size-xl="4" size-xs="12">
+            <ion-card no-padding>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row class="ion-align-items-start">
+                    <ion-col size-xl="5" size-xs="5">
+                      <img src="/assets/icon/breathing_rate.png" class="result-icon"><br />
+                      <p><b>Breathing Rate</b></p>
+                    </ion-col>
+                    <ion-col size-xl="7" size-xs="7">
+                      <div echarts class="demo-chart" [options]="chartOption_BR" [merge]="new_chartOption_BR"></div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size-xl="5" size-xs="12">
+            <ion-card no-padding>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row class="ion-align-items-start">
+                    <ion-col size-xl="4" size-xs="4">
+                      <img src="/assets/icon/blood_pressure1.png" class="result-icon"><br />
+                      <p><b>Blood Pressure</b></p>
+                    </ion-col>
+                    <ion-col size-xl="4" size-xs="4">
+                      <div echarts class="demo-chart" [options]="chartOption_SBP" [merge]="new_chartOption_SBP"></div>
+                    </ion-col>
+                    <ion-col size-xl="4" size-xs="4">
+                      <div echarts class="demo-chart" [options]="chartOption_DBP" [merge]="new_chartOption_DBP"></div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col size-xl="3" size-xs="12">
+            <ion-card no-padding>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row class="ion-align-items-start">
+                    <ion-col size-xl="5" size-xs="5">
+                      <img src="/assets/icon/heart_rate_variability.png" class="result-icon"><br />
+                      <p><b>Heart Rate Variability</b></p>
+                    </ion-col>
+                    <ion-col size-xl="7" size-xs="7">
+                      <div echarts class="demo-chart" [options]="chartOption_HRV" [merge]="new_chartOption_HRV"></div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

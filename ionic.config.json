@@ -1,0 +1,7 @@
+{
+  "name": "face-ai",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
